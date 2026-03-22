@@ -1,12 +1,25 @@
 <script lang="ts">
   import { db } from "$lib/firebase";
 
-  import { collection, getDocs } from "firebase/firestore";
+  import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 
-  async function test() {
-    const querySnapshot = await getDocs(collection(db, "test"));
+  async function pick_idea() {
+    const querySnapshot = await getDocs(collection(db, "ideas"));
 
-    console.log(querySnapshot.docs[0].data());
+    const docs = querySnapshot.docs;
+    const number_of_items_in_jar = docs.length;
+
+    if (number_of_items_in_jar < 1) return alert("Jar is empty");
+    const random_index = Math.floor(Math.random() * number_of_items_in_jar);
+
+    const random_doc = docs[random_index];
+
+    alert(`Idea: ${random_doc.data().name}`);
+
+    if (confirm("Remove idea from jar?")) {
+      alert("OK, the idea will be removed from the jar");
+      await deleteDoc(doc(db, "ideas", random_doc.id));
+    }
 
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.data());
@@ -14,10 +27,10 @@
   }
 </script>
 
-<h1>Welcome to SvelteKit</h1>
+<h1>Idea Jar</h1>
 <p>
-  Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the
-  documentation
+  <!-- <a href="/ideas">My ideas</a> -->
+  <a href="/ideas/new">Add an idea</a>
 </p>
 
-<button onclick={test}>Test</button>
+<button onclick={pick_idea}>Pick an idea from the jar</button>
