@@ -6,7 +6,7 @@
   async function test() {
     const querySnapshot = await getDocs(collection(db, "test"));
 
-    console.log(querySnapshot.docs[1].data());
+    console.log(querySnapshot.docs[0].data());
 
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.data());
