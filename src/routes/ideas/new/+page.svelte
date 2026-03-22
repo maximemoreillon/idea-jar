@@ -22,15 +22,17 @@
 </script>
 
 <h2>New idea</h2>
-
+<p>
+  <a href="/">Return</a>
+</p>
 <form onsubmit={add_idea}>
-  <div>
+  <!-- <div>
     <label for="name">Idea</label>
     <input type="text" id="name" bind:value={user_data.name} />
-  </div>
-  <!-- <div>
-    <label for="description">Description</label>
-    <input type="text" id="description" bind:value={user_data.description} />
   </div> -->
+  <!-- <div> -->
+  <label for="description">Description</label>
+  <input type="text" id="description" bind:value={user_data.description} />
+  <!-- </div> -->
   <button type="submit">Submit</button>
 </form>

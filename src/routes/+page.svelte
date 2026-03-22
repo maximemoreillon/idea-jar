@@ -14,7 +14,7 @@
 
     const random_doc = docs[random_index];
 
-    alert(`Idea: ${random_doc.data().name}`);
+    alert(`${random_doc.data().description}`);
 
     if (confirm("Remove idea from jar?")) {
       alert("OK, the idea will be removed from the jar");
