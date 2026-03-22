@@ -1,11 +1,11 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { db } from "$lib/firebase";
+  import { auth, db } from "$lib/firebase";
 
   import { addDoc, collection } from "firebase/firestore";
 
   const user_data = $state({
-    name: "",
+    // name: "",
     description: "",
   });
 
@@ -14,6 +14,7 @@
 
     const docRef = await addDoc(collection(db, "ideas"), {
       ...user_data,
+      author: auth.currentUser?.email,
     });
 
     // return goto(`/ideas/${docRef.id}`);
