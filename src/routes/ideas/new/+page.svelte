@@ -25,7 +25,7 @@
 
 <form onsubmit={add_idea}>
   <div>
-    <label for="name">Name</label>
+    <label for="name">Idea</label>
     <input type="text" id="name" bind:value={user_data.name} />
   </div>
   <!-- <div>
