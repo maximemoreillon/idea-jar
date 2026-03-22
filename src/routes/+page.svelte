@@ -42,7 +42,7 @@
     const picked_idea_index = random_number_between_0_and(number_of_ideas);
     const picked_idea = database_records[picked_idea_index];
 
-    alert(`Idea ${picked_idea.data().description}`);
+    alert(`Idea: ${picked_idea.data().description}`);
 
     if (confirm("Remove idea from jar?")) {
       alert("OK, the idea will be removed from the jar");
