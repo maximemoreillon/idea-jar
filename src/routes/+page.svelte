@@ -1,14 +1,19 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import IdeasCount from "$lib/components/ideasCount.svelte";
   import { db } from "$lib/firebase";
 
   import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+
+  let picking = $state(false);
 
   function random_number_between_0_and(x: number) {
     return Math.floor(Math.random() * x);
   }
 
   async function pick_idea() {
+    picking = true;
+
     // Query the "ideas" collection in the database
     const databse_query = await getDocs(collection(db, "ideas"));
 
@@ -26,8 +31,6 @@
     const random_author_index = random_number_between_0_and(number_of_authors);
     const picked_author = distinct_authors[random_author_index];
 
-    alert(`Chosen author: ${picked_author}`);
-
     // STEP 2: pick one random idea of that author
 
     // Filter out ideas that are not from the picked author
@@ -42,21 +45,18 @@
     const picked_idea_index = random_number_between_0_and(number_of_ideas);
     const picked_idea = database_records[picked_idea_index];
 
-    alert(`Idea: ${picked_idea.data().description}`);
+    goto(`/ideas/${picked_idea.id}`);
 
-    if (confirm("Remove idea from jar?")) {
-      alert("OK, the idea will be removed from the jar");
-
-      await deleteDoc(doc(db, "ideas", picked_idea.id)); // TODO: mark as done istead of deleting
-    }
+    picking = false;
   }
 </script>
 
-<h1>Idea Jar</h1>
+<h2>Jar</h2>
 
 <IdeasCount />
 
 <p>
   <a href="/ideas/new">Add an idea</a>
 </p>
-<button onclick={pick_idea}>Pick an idea from the jar</button>
+<button onclick={pick_idea} disabled={picking}>Pick an idea from the jar</button
+>

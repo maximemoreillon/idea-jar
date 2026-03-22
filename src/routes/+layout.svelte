@@ -22,5 +22,9 @@
 </svelte:head>
 
 <main>
-  {@render children()}
+  {#if authenticating}
+    <div>Checking for authentication...</div>
+  {:else}
+    {@render children()}
+  {/if}
 </main>
