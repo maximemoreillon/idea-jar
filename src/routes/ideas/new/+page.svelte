@@ -4,16 +4,13 @@
 
   import { addDoc, collection } from "firebase/firestore";
 
-  const user_data = $state({
-    // name: "",
-    description: "",
-  });
+  let description = $state("");
 
   async function add_idea(event: Event) {
     event.preventDefault();
 
     const docRef = await addDoc(collection(db, "ideas"), {
-      ...user_data,
+      description,
       author: auth.currentUser?.email,
     });
 
@@ -27,13 +24,7 @@
   <a href="/">Return</a>
 </p>
 <form onsubmit={add_idea}>
-  <!-- <div>
-    <label for="name">Idea</label>
-    <input type="text" id="name" bind:value={user_data.name} />
-  </div> -->
-  <!-- <div> -->
   <label for="description">Description</label>
-  <input type="text" id="description" bind:value={user_data.description} />
-  <!-- </div> -->
+  <input type="text" id="description" bind:value={description} />
   <button type="submit">Submit</button>
 </form>
