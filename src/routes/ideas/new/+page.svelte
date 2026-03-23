@@ -1,21 +1,19 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { auth, db } from "$lib/firebase";
-
-  import { addDoc, collection } from "firebase/firestore";
+  import { auth, ideas_collection } from "$lib/firebase";
+  import { addDoc } from "firebase/firestore";
 
   let description = $state("");
 
   async function add_idea(event: Event) {
-    event.preventDefault();
+    event.preventDefault(); // Override the web broiwser's default behavior on form submission
 
-    const docRef = await addDoc(collection(db, "ideas"), {
+    const docRef = await addDoc(ideas_collection, {
       description,
       author: auth.currentUser?.email,
     });
 
-    return goto(`/ideas/${docRef.id}`);
-    // return goto(`/`);
+    return goto(`/ideas/${docRef.id}`); // Go to the idea's detail page
   }
 </script>
 

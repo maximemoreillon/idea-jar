@@ -6,11 +6,12 @@
   import DeleteIdeaButton from "$lib/components/deleteIdeaButton.svelte";
 
   let idea = $state<any>(); // TODO: typing
-  let loading = $state(true);
+  let loading = $state(false);
 
   async function fetch_idea() {
+    loading = true;
     const { id } = page.params; // same as const id = page.params.id
-    if (!id) throw new Error("Missing ID");
+    if (!id) return alert("Missing ID");
     idea = await getDoc(doc(db, "ideas", id));
     loading = false;
   }

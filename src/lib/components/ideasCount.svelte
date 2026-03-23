@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { db } from "$lib/firebase";
-  import { collection, onSnapshot, query, where } from "firebase/firestore";
+  import { ideas_collection } from "$lib/firebase";
+  import { onSnapshot, query } from "firebase/firestore";
   import { onMount } from "svelte";
 
   type UserIdeaCountRecord = { name: string; ideaCount: number };
@@ -8,7 +8,7 @@
   let loading = $state(true);
 
   const subscribeToIdeas = () => {
-    const database_query = query(collection(db, "ideas"));
+    const database_query = query(ideas_collection);
 
     onSnapshot(database_query, async ({ docs }) => {
       users = docs.reduce((acc: UserIdeaCountRecord[], doc) => {

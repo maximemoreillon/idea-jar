@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    signInWithPopup,
-    signInWithRedirect,
-    GoogleAuthProvider,
-  } from "firebase/auth";
+  import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
   import { auth, googleProvider } from "$lib/firebase";
 
   // https://firebase.google.com/docs/auth/web/google-signin

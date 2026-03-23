@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import IdeasCount from "$lib/components/ideasCount.svelte";
-  import { db } from "$lib/firebase";
+  import { db, ideas_collection } from "$lib/firebase";
 
   import { collection, getDocs } from "firebase/firestore";
 
@@ -14,11 +14,8 @@
   async function pick_idea() {
     picking = true;
 
-    // Use the query to fetch "ideas" collection in the database
-    const database_fetch_result = await getDocs(collection(db, "ideas"));
-
-    // Get the records (items) from the database query
-    const database_records = database_fetch_result.docs;
+    const database_fetch_result = await getDocs(ideas_collection); // Query the database
+    const database_records = database_fetch_result.docs; // Get the records (items) from the database query result
 
     // STEP 1: pick one author
 
@@ -40,12 +37,14 @@
 
     const number_of_ideas = items_of_picked_author.length;
 
-    if (number_of_ideas < 1) return alert("Jar is empty");
+    if (number_of_ideas > 0) {
+      const picked_idea_index = random_number_between_0_and(number_of_ideas);
+      const picked_idea = database_records[picked_idea_index];
 
-    const picked_idea_index = random_number_between_0_and(number_of_ideas);
-    const picked_idea = database_records[picked_idea_index];
-
-    goto(`/ideas/${picked_idea.id}`);
+      goto(`/ideas/${picked_idea.id}`);
+    } else {
+      alert("Jar is empty");
+    }
 
     picking = false;
   }
@@ -55,9 +54,6 @@
 
 <IdeasCount />
 
-<p>
-  <a href="/ideas/new">Add an idea</a>
-  <a href="/ideas">My ideas</a>
-</p>
-<button onclick={pick_idea} disabled={picking}>Pick an idea from the jar</button
->
+<button onclick={pick_idea} disabled={picking}>
+  Pick an idea from the jar
+</button>
