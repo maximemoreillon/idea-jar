@@ -3,7 +3,7 @@
   import IdeasCount from "$lib/components/ideasCount.svelte";
   import { db } from "$lib/firebase";
 
-  import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+  import { collection, getDocs, query, where } from "firebase/firestore";
 
   let picking = $state(false);
 
@@ -14,11 +14,14 @@
   async function pick_idea() {
     picking = true;
 
-    // Query the "ideas" collection in the database
-    const databse_query = await getDocs(collection(db, "ideas"));
+    // Generate database query
+    const database_query = query(collection(db, "ideas"));
+
+    // Use the query to fetch "ideas" collection in the database
+    const database_fetch_result = await getDocs(database_query);
 
     // Get the records (items) from the database query
-    const database_records = databse_query.docs;
+    const database_records = database_fetch_result.docs;
 
     // STEP 1: pick one author
 
@@ -33,9 +36,9 @@
 
     // STEP 2: pick one random idea of that author
 
-    // Filter out ideas that are not from the picked author
+    // Filter out ideas that are not from the picked author and that are not picked yet
     const items_of_picked_author = database_records.filter(
-      (d) => d.data().author === picked_author,
+      (d) => d.data().author === picked_author && !d.data(),
     );
 
     const number_of_ideas = items_of_picked_author.length;
@@ -57,6 +60,8 @@
 
 <p>
   <a href="/ideas/new">Add an idea</a>
+  <a href="/ideas">My ideas</a>
+  <a href="/ideas?picked=true">Picked ideas</a>
 </p>
 <button onclick={pick_idea} disabled={picking}>Pick an idea from the jar</button
 >

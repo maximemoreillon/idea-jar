@@ -29,9 +29,11 @@
 {#if loading}
   <div>Loading...</div>
 {:else if idea}
-  <p>
-    <MarkAsPickedButton id={idea.id} />
-  </p>
+  {#if !idea.picked}
+    <p>
+      <MarkAsPickedButton id={idea.id} />
+    </p>
+  {/if}
 
   <div>
     Description: {idea.description}
@@ -41,7 +43,6 @@
   </div>
 
   {#if idea.author === auth.currentUser?.email}
-    <!-- TODO: allow edit -->
     <p>
       <DeleteIdeaButton id={idea.id} />
     </p>

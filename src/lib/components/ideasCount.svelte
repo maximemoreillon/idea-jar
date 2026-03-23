@@ -1,6 +1,6 @@
 <script lang="ts">
   import { db } from "$lib/firebase";
-  import { collection, onSnapshot, query } from "firebase/firestore";
+  import { collection, onSnapshot, query, where } from "firebase/firestore";
   import { onMount } from "svelte";
 
   type UserIdeaCountRecord = { name: string; ideaCount: number };
@@ -8,10 +8,9 @@
   let loading = $state(true);
 
   const subscribeToIdeas = () => {
-    const collectionRef = collection(db, "ideas");
-    const q = query(collectionRef);
+    const database_query = query(collection(db, "ideas"));
 
-    onSnapshot(q, async ({ docs }) => {
+    onSnapshot(database_query, async ({ docs }) => {
       users = docs.reduce((acc: UserIdeaCountRecord[], doc) => {
         const name = doc.data().author;
         const foundAuthorIndex = acc.findIndex((r) => r.name === name);
@@ -29,10 +28,16 @@
 </script>
 
 <div>
-  <span> The Jar contains </span>
-  {#each users as user}
-    <span>
-      {user.ideaCount} idea(s) from {user.name},
-    </span>
-  {/each}
+  {#if loading}
+    <div>Loading jar content...</div>
+  {:else if users.length > 0}
+    <span> The jar contains </span>
+    {#each users as user}
+      <span>
+        {user.ideaCount} idea(s) from {user.name},
+      </span>
+    {/each}
+  {:else}
+    <div>Jar is empty</div>
+  {/if}
 </div>
