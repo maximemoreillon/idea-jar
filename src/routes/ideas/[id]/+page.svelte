@@ -3,7 +3,6 @@
   import { doc, getDoc, type DocumentData } from "firebase/firestore";
   import { onMount } from "svelte";
   import { page } from "$app/state";
-  import MarkAsPickedButton from "$lib/components/markAsPickedButton.svelte";
   import DeleteIdeaButton from "$lib/components/deleteIdeaButton.svelte";
 
   // Not very clean as id not part of DocumentData
@@ -29,12 +28,6 @@
 {#if loading}
   <div>Loading...</div>
 {:else if idea}
-  {#if !idea.picked}
-    <p>
-      <MarkAsPickedButton id={idea.id} />
-    </p>
-  {/if}
-
   <div>
     Description: {idea.description}
   </div>
@@ -42,11 +35,11 @@
     Author: {idea.author}
   </div>
 
-  {#if idea.author === auth.currentUser?.email}
-    <p>
-      <DeleteIdeaButton id={idea.id} />
-    </p>
-  {/if}
+  <!-- {#if idea.author === auth.currentUser?.email} -->
+  <p>
+    <DeleteIdeaButton id={idea.id} />
+  </p>
+  <!-- {/if} -->
 {:else}
   <div>Error loading idea</div>
 {/if}

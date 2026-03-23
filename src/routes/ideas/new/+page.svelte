@@ -15,11 +15,10 @@
     const docRef = await addDoc(collection(db, "ideas"), {
       ...user_data,
       author: auth.currentUser?.email,
-      picked: false,
     });
 
-    // return goto(`/ideas/${docRef.id}`);
-    return goto(`/`);
+    return goto(`/ideas/${docRef.id}`);
+    // return goto(`/`);
   }
 </script>
 
