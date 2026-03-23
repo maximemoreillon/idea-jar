@@ -21,6 +21,14 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
+<header>
+  <h1>Idea jar</h1>
+  <nav>
+    <a href="/">Jar</a>
+    <a href="/ideas">My ideas</a>
+    <a href="/ideas/new">Add idea</a>
+  </nav>
+</header>
 <main>
   {#if authenticating}
     <div>Checking for authentication...</div>

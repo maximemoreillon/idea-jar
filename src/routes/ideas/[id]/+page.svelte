@@ -1,45 +1,38 @@
 <script lang="ts">
-  import { auth, db } from "$lib/firebase";
-  import { doc, getDoc, type DocumentData } from "firebase/firestore";
+  import { db } from "$lib/firebase";
+  import { doc, getDoc } from "firebase/firestore";
   import { onMount } from "svelte";
   import { page } from "$app/state";
   import DeleteIdeaButton from "$lib/components/deleteIdeaButton.svelte";
 
-  // Not very clean as id not part of DocumentData
-  let idea = $state<DocumentData>();
+  let idea = $state<any>(); // TODO: typing
   let loading = $state(true);
 
-  onMount(async () => {
+  async function fetch_idea() {
     const { id } = page.params; // same as const id = page.params.id
     if (!id) throw new Error("Missing ID");
-    const docSnap = await getDoc(doc(db, "ideas", id));
-    if (!docSnap) throw new Error("Document not found");
-    idea = { ...docSnap.data(), id: docSnap.id };
+    idea = await getDoc(doc(db, "ideas", id));
     loading = false;
-  });
+  }
+
+  onMount(fetch_idea);
 </script>
 
-<h2>Idea</h2>
-
-<p>
-  <a href="/">Return to jar</a>
-</p>
+<h2>Idea details</h2>
 
 {#if loading}
   <div>Loading...</div>
 {:else if idea}
   <div>
-    Description: {idea.description}
+    Description: {idea.data().description}
   </div>
   <div>
-    Author: {idea.author}
+    Author: {idea.data().author}
   </div>
 
-  <!-- {#if idea.author === auth.currentUser?.email} -->
   <p>
     <DeleteIdeaButton id={idea.id} />
   </p>
-  <!-- {/if} -->
 {:else}
   <div>Error loading idea</div>
 {/if}

@@ -20,9 +20,7 @@
 </script>
 
 <h2>New idea</h2>
-<p>
-  <a href="/">Return</a>
-</p>
+
 <form onsubmit={add_idea}>
   <label for="description">Description</label>
   <input type="text" id="description" bind:value={description} />

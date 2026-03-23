@@ -24,10 +24,6 @@
 
 <h2>Ideas</h2>
 
-<p>
-  <a href="/">Return</a>
-</p>
-
 {#if loading}
   <div>Loading ...</div>
 {:else if ideas.length > 0}
