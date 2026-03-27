@@ -1,10 +1,10 @@
 <script lang="ts">
   import { auth, ideas_collection } from "$lib/firebase";
 
-  import { getDocs, query, where } from "firebase/firestore";
+  import { DocumentSnapshot, getDocs, query, where } from "firebase/firestore";
   import { onMount } from "svelte";
 
-  let ideas = $state<any[]>([]); // TODO: sensible typing
+  let ideas = $state<DocumentSnapshot[]>([]); // TODO: sensible typing
   let loading = $state(false);
 
   async function fetch_ideas() {
@@ -30,7 +30,9 @@
   <ul>
     {#each ideas as idea}
       <li>
-        <a href={`/ideas/${idea.id}`}>{idea.data().description} </a>
+        <a href={`/ideas/${idea.id}`}
+          >{idea.data()?.description || "Undescribed item"}
+        </a>
       </li>
     {/each}
   </ul>
