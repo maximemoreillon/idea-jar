@@ -19,6 +19,11 @@
 
     const database_records = database_fetch_result.docs; // Get the records (items) from the database query result
 
+    if (database_records.length < 1) {
+      alert("Jar is empty");
+      return; // Stop execution
+    }
+
     // STEP 1: pick one author
     const picked_author = pick_random_author(database_records);
 
@@ -32,7 +37,7 @@
 
     // Deal with cases where there are no ideas
     if (number_of_ideas < 1) {
-      alert("Jar is empty");
+      alert("User has no idea");
       return; // Stop execution
     }
 
