@@ -6,14 +6,14 @@
   let description = $state("");
 
   async function add_idea(event: Event) {
-    event.preventDefault(); // Override the web broiwser's default behavior on form submission
+    event.preventDefault(); // Override the web browser's default behavior on form submission
 
-    const docRef = await addDoc(ideas_collection, {
+    const created_idea = await addDoc(ideas_collection, {
       description,
       author: auth.currentUser?.email,
     });
 
-    return goto(`/ideas/${docRef.id}`); // Go to the idea's detail page
+    return goto(`/ideas/${created_idea.id}`); // Go to the newly created idea's detail page
   }
 </script>
 

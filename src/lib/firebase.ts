@@ -19,4 +19,3 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore();
 export const ideas_collection = collection(db, "ideas");
-export const googleProvider = new GoogleAuthProvider();

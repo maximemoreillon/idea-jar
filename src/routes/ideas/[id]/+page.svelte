@@ -24,12 +24,12 @@
 {#if loading}
   <div>Loading...</div>
 {:else if idea}
-  <div>
+  <p>
     Description: {idea.data()?.description || "Undescribed item"}
-  </div>
-  <div>
+  </p>
+  <p>
     Author: {idea.data()?.author || "Anonymous"}
-  </div>
+  </p>
 
   <p>
     <DeleteIdeaButton id={idea.id} />

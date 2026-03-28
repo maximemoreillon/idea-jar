@@ -9,6 +9,7 @@
   import { ideas_collection } from "$lib/firebase";
 
   import { getDocs } from "firebase/firestore";
+  import { sineIn } from "svelte/easing";
 
   let fetching = $state(false);
 
@@ -54,6 +55,8 @@
 
 <IdeasCount />
 
-<button onclick={pick_idea} disabled={fetching}>
-  Pick an idea from the jar
-</button>
+<p>
+  <button onclick={pick_idea} disabled={fetching}>
+    Pick an idea from the jar
+  </button>
+</p>

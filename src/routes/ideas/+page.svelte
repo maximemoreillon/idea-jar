@@ -30,8 +30,8 @@
   <ul>
     {#each ideas as idea}
       <li>
-        <a href={`/ideas/${idea.id}`}
-          >{idea.data()?.description || "Undescribed item"}
+        <a href={`/ideas/${idea.id}`}>
+          {idea.data()?.description || "Undescribed item"}
         </a>
       </li>
     {/each}
