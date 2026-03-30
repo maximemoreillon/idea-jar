@@ -88,3 +88,9 @@
     fill-opacity="0.25"
   />
 </svg>
+
+<style>
+  svg {
+    max-width: 100%;
+  }
+</style>
