@@ -27,15 +27,13 @@
 {#if loading}
   <div>Loading ...</div>
 {:else if ideas.length > 0}
-  <ul>
-    {#each ideas as idea}
-      <li>
-        <a href={`/ideas/${idea.id}`}>
-          {idea.data()?.description || "Undescribed item"}
-        </a>
-      </li>
-    {/each}
-  </ul>
+  {#each ideas as idea}
+    <p>
+      <a href={`/ideas/${idea.id}`}>
+        {idea.data()?.description || "Undescribed item"}
+      </a>
+    </p>
+  {/each}
 {:else}
   <div>No idea</div>
 {/if}

@@ -6,10 +6,10 @@
     random_number_between_0_and,
   } from "$lib";
   import IdeasCount from "$lib/components/ideasCount.svelte";
+  import JarSvg from "$lib/components/jarSvg.svelte";
   import { ideas_collection } from "$lib/firebase";
 
   import { getDocs } from "firebase/firestore";
-  import { sineIn } from "svelte/easing";
 
   let fetching = $state(false);
 
@@ -55,8 +55,14 @@
 
 <IdeasCount />
 
-<p>
-  <button onclick={pick_idea} disabled={fetching}>
-    Pick an idea from the jar
-  </button>
-</p>
+<button onclick={pick_idea}>
+  <JarSvg />
+</button>
+
+<style>
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+</style>

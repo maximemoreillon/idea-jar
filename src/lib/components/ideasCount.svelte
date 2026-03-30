@@ -7,6 +7,7 @@
   let users = $state<UserIdeaCountRecord[]>([]);
   let loading = $state(true);
 
+  // TODO: no need to subscribe
   const subscribeToIdeas = () => {
     const database_query = query(ideas_collection);
 

@@ -36,3 +36,11 @@
     {@render children()}
   </main>
 {/if}
+
+<style>
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+  }
+</style>
